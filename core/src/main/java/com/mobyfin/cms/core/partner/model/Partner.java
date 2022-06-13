@@ -1,4 +1,4 @@
-package com.mobyfin.cms.core.partner;
+package com.mobyfin.cms.core.partner.model;
 
 import lombok.*;
 
@@ -18,4 +18,7 @@ public class Partner {
     String firstname;
     String lastname;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @PrimaryKeyJoinColumn
+    PartnerInfo info;
 }

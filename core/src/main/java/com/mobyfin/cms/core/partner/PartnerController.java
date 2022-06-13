@@ -1,5 +1,7 @@
 package com.mobyfin.cms.core.partner;
 
+import com.mobyfin.cms.core.partner.dto.PartnerCreationRequest;
+import com.mobyfin.cms.core.partner.model.Partner;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
