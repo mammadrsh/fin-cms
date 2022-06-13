@@ -17,6 +17,7 @@ public class Partner {
     PartnerType partnerType;
     String firstname;
     String lastname;
+    String email;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn

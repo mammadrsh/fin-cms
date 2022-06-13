@@ -19,6 +19,7 @@ public class PartnerService {
                 .partnerType(PartnerType.DEALER)
                 .firstname("Jax")
                 .lastname("Tomd")
+                .email("test@test.com")
                 .info(info)
                 .build();
 
