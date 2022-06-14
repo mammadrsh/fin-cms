@@ -3,6 +3,7 @@ package com.mobyfin.cms.core.partner.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -17,9 +18,15 @@ public class Partner {
     PartnerType partnerType;
     String firstname;
     String lastname;
+    @Column(
+            unique = true
+    )
     String email;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
     PartnerInfo info;
+
+    @OneToMany
+    Set<Address> addresses;
 }
