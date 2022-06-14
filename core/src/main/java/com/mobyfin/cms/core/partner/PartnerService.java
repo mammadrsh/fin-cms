@@ -5,6 +5,7 @@ import com.mobyfin.cms.core.partner.model.Partner;
 import com.mobyfin.cms.core.partner.model.PartnerInfo;
 import com.mobyfin.cms.core.partner.model.PartnerType;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -13,13 +14,15 @@ public class PartnerService {
     private final PartnerRepository partnerRepository;
 
     public Partner createPartner(PartnerCreationRequest partnerCreationRequest) {
-        PartnerInfo info = PartnerInfo.builder().companyName("Awesome Autos").build();
+        if (partnerRepository.existsByEmail(partnerCreationRequest.getEmail()))
+            throw new IllegalArgumentException("Email already exists : " + partnerCreationRequest.getEmail());
 
+        PartnerInfo info = PartnerInfo.builder().companyName("Awesome Autos").build();
         Partner partner = Partner.builder()
                 .partnerType(PartnerType.DEALER)
-                .firstname("Jax")
-                .lastname("Tomd")
-                .email("test@test.com")
+                .firstname(partnerCreationRequest.getFirstName())
+                .lastname(partnerCreationRequest.getLastName())
+                .email(partnerCreationRequest.getEmail())
                 .info(info)
                 .build();
 
