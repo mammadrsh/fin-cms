@@ -1,16 +1,23 @@
 package com.mobyfin.cms.core.partner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Address {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     Long id;
     AddressType addressType;
     String cityName;
@@ -20,14 +27,13 @@ public class Address {
     String addressLine2;
     Integer zipcode;
 
-    @Temporal(TemporalType.DATE)
-    Date effectiveDateFrom;
-    @Temporal(TemporalType.DATE)
-    Date effectiveDateTo;
+    LocalDate effectiveDateFrom;
+    LocalDate effectiveDateTo;
 
     boolean isCurrent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     Partner partner;
 }
 

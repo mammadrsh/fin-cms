@@ -33,6 +33,7 @@ class PartnerInfoRepositoryTest {
                 .partnerType(PartnerType.DEALER)
                 .firstname("Jax")
                 .lastname("Tomd")
+                .email("test@test.com")
                 .info(info)
                 .build();
 
@@ -47,7 +48,7 @@ class PartnerInfoRepositoryTest {
     }
 
     @Test
-    void itShouldCheckIfPartnerInfoCompanyNameDeosNotExists() {
+    void itShouldCheckIfPartnerInfoCompanyNameDoesNotExists() {
         // given
         String companyName = "Awesome Autos";
 

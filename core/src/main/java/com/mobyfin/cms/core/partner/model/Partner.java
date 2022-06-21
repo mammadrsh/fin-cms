@@ -3,6 +3,7 @@ package com.mobyfin.cms.core.partner.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -19,7 +20,8 @@ public class Partner {
     String firstname;
     String lastname;
     @Column(
-            unique = true
+            unique = true,
+            nullable = false
     )
     String email;
 
@@ -27,6 +29,6 @@ public class Partner {
     @PrimaryKeyJoinColumn
     PartnerInfo info;
 
-    @OneToMany
-    Set<Address> addresses;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partner")
+    Set<Address> addresses = new HashSet<>();
 }

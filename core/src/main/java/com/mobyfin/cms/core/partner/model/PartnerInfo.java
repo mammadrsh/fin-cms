@@ -1,15 +1,13 @@
 package com.mobyfin.cms.core.partner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -22,8 +20,8 @@ public class PartnerInfo {
     Long id;
     String companyName;
 
-    @OneToOne
     @MapsId
+    @OneToOne
     @JsonIgnore
     Partner partner;
 }

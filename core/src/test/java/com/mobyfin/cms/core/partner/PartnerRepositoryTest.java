@@ -1,8 +1,7 @@
 package com.mobyfin.cms.core.partner;
 
-import com.mobyfin.cms.core.partner.model.Partner;
-import com.mobyfin.cms.core.partner.model.PartnerInfo;
-import com.mobyfin.cms.core.partner.model.PartnerType;
+import com.mobyfin.cms.core.partner.model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,6 +14,11 @@ class PartnerRepositoryTest {
     @Autowired
     private PartnerRepository underTest;
 
+    @AfterEach
+    void tearDown() {
+        underTest.deleteAll();
+    }
+
     @Test
     void itShouldCheckIfPartnerExistsByEmail() {
         // given
@@ -26,17 +30,17 @@ class PartnerRepositoryTest {
                 .firstname("Jax")
                 .lastname("Tomd")
                 .email(email)
-                .info(info)
+//                .info(info)
                 .build();
 
         info.setPartner(partner);
         underTest.save(partner);
 
         // when
-        underTest.existsByEmail(email);
+        Boolean expected = underTest.existsByEmail(email);
 
         // then
-        assertThat(underTest.existsByEmail(email)).isTrue();
+        assertThat(expected).isTrue();
     }
 
     @Test
@@ -45,9 +49,21 @@ class PartnerRepositoryTest {
         String email = "test@test.com";
 
         // when
-        underTest.existsByEmail(email);
+        boolean expected = underTest.existsByEmail(email);
 
         // then
-        assertThat(underTest.existsByEmail(email)).isFalse();
+        assertThat(expected).isFalse();
+    }
+
+    @Test
+    void itShouldCheckIfPartnerDoesNotExistsByEmailGivenNull() {
+        // given
+        String email = null;
+
+        // when
+        boolean expected = underTest.existsByEmail(null);
+
+        // then
+        assertThat(expected).isFalse();
     }
 }
