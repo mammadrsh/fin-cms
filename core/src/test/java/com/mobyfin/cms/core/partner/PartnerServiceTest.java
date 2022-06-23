@@ -1,7 +1,9 @@
 package com.mobyfin.cms.core.partner;
 
-import com.mobyfin.cms.core.partner.dto.PartnerInsertView;
+import com.mobyfin.cms.core.partner.dto.PartnerDto;
 import com.mobyfin.cms.core.partner.model.*;
+import com.mobyfin.cms.core.partner.repository.AddressRepository;
+import com.mobyfin.cms.core.partner.repository.PartnerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,7 +58,7 @@ class PartnerServiceTest {
                 .lastname("Esmiman")
                 .partnerType(PartnerType.DEALER)
                 .email("morgan.e@gmail.com")
-                .info(info)
+                .partnerInfo(info)
                 .addresses(new HashSet<>(Collections.singletonList(address)))
                 .build();
     }
@@ -63,16 +66,11 @@ class PartnerServiceTest {
     @Test
     void canCreatePartner() {
         // given
-        PartnerInsertView request = new PartnerInsertView();
-        request.setFirstName(partner.getFirstname());
-        request.setPartnerInfo(partner.getInfo());
-        request.setAddresses(partner.getAddresses());
-
         when(partnerRepository.save(Mockito.any(Partner.class)))
                 .thenAnswer(i -> i.getArguments()[0]);
 
         // when
-        Partner createdPartner = underTest.createPartner(request);
+        Partner createdPartner = underTest.createPartner(partner);
 
         // then
         ArgumentCaptor<Partner> partnerArgumentCaptor = ArgumentCaptor.forClass(Partner.class);
@@ -81,8 +79,8 @@ class PartnerServiceTest {
         then(partnerRepository).should().save(partnerArgumentCaptor.capture());
 
         Partner capturedPartner = partnerArgumentCaptor.getValue();
-        assertThat(createdPartner.getInfo()).isNotNull();
-        assertThat(capturedPartner.getInfo()).isNotNull();
+        assertThat(createdPartner.getPartnerInfo()).isNotNull();
+        assertThat(capturedPartner.getPartnerInfo()).isNotNull();
         assertThat(createdPartner.getAddresses()).isNotNull();
         assertThat(capturedPartner.getAddresses()).isNotNull();
     }
@@ -90,15 +88,14 @@ class PartnerServiceTest {
     @Test
     void willThrowWhenEmailIsTaken() {
         // given
-        PartnerInsertView request = new PartnerInsertView();
 
-        given(partnerRepository.existsByEmail(request.getEmail())).willReturn(true);
+        given(partnerRepository.existsByEmail(partner.getEmail())).willReturn(true);
         // when
 
         // then
-        assertThatThrownBy(() -> underTest.createPartner(request))
+        assertThatThrownBy(() -> underTest.createPartner(partner))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Email already exists : " + request.getEmail());
+                .hasMessageContaining("Email already exists : " + partner.getEmail());
 
         verify(partnerRepository, never()).save(any());
     }
@@ -109,5 +106,26 @@ class PartnerServiceTest {
         underTest.getPartners();
         // then
         verify(partnerRepository).findAll();
+    }
+
+    @Test
+    void canUpdatePartner() {
+        // given
+        Long id = 10L;
+        String newFirstName = "Ahmad";
+        given(partnerRepository.findById(id)).willReturn(Optional.ofNullable(partner));
+        when(partnerRepository.save(Mockito.any(Partner.class)))
+                .thenAnswer(i -> i.getArguments()[0]);
+
+        // when
+        partner.setFirstname(newFirstName);
+        Partner createdPartner = underTest.updatePartner(id, partner);
+
+        // then
+        ArgumentCaptor<Partner> partnerArgumentCaptor = ArgumentCaptor.forClass(Partner.class);
+        verify(partnerRepository).save(partnerArgumentCaptor.capture());
+        Partner capturedPartner = partnerArgumentCaptor.getValue();
+        assertThat(createdPartner.getFirstname()).isEqualTo(newFirstName);
+        assertThat(capturedPartner.getFirstname()).isEqualTo(newFirstName);
     }
 }

@@ -27,7 +27,7 @@ public class Partner {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
-    PartnerInfo info;
+    PartnerInfo partnerInfo;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partner")
     Set<Address> addresses = new HashSet<>();

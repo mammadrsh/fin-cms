@@ -14,11 +14,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PartnerInsertView {
+public class PartnerDto {
     String firstName;
     String lastName;
     String email;
     PartnerType partnerType;
-    Set<Address> addresses;
     PartnerInfo partnerInfo;
+    Set<Address> addresses;
 }

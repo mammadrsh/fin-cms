@@ -3,6 +3,8 @@ package com.mobyfin.cms.core.partner;
 import com.mobyfin.cms.core.partner.model.Partner;
 import com.mobyfin.cms.core.partner.model.PartnerInfo;
 import com.mobyfin.cms.core.partner.model.PartnerType;
+import com.mobyfin.cms.core.partner.repository.PartnerInfoRepository;
+import com.mobyfin.cms.core.partner.repository.PartnerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ class PartnerInfoRepositoryTest {
                 .firstname("Jax")
                 .lastname("Tomd")
                 .email("test@test.com")
-                .info(info)
+                .partnerInfo(info)
                 .build();
 
         info.setPartner(partner);

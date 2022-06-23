@@ -4,8 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mobyfin.cms.core.partner.dto.PartnerInsertView;
+import com.mobyfin.cms.core.partner.dto.PartnerDto;
 import com.mobyfin.cms.core.partner.model.*;
+import com.mobyfin.cms.core.partner.repository.PartnerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,7 +65,7 @@ class PartnerControllerTest {
                 .lastname("Esmiman")
                 .partnerType(PartnerType.DEALER)
                 .email("morgan.e@gmail.com")
-                .info(info)
+                .partnerInfo(info)
                 .addresses(new HashSet<>(Arrays.asList(address)))
                 .build();
     }
@@ -73,10 +73,10 @@ class PartnerControllerTest {
     @Test
     void createPartner() throws Exception {
         // given
-        PartnerInsertView request = new PartnerInsertView();
+        PartnerDto request = new PartnerDto();
         request.setFirstName(partner.getFirstname());
         request.setEmail(partner.getEmail());
-        request.setPartnerInfo(partner.getInfo());
+        request.setPartnerInfo(partner.getPartnerInfo());
         request.setAddresses(partner.getAddresses());
 
         // when
@@ -86,17 +86,17 @@ class PartnerControllerTest {
 
         // then
         createPartnerResultAction
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string(containsString(partner.getEmail())))
-                .andExpect(content().string(containsString(partner.getInfo().getCompanyName())))
+                .andExpect(content().string(containsString(partner.getPartnerInfo().getCompanyName())))
                 .andExpect(content().string(containsString(partner.getAddresses().stream().findFirst().get().getAddressLine1())));
 
         Partner pe = partnerRepository.findById(1L).orElseThrow();
         assertThat(partnerRepository.findById(1L))
                 .isPresent()
                 .hasValueSatisfying(p -> assertThat(p.getEmail()).isEqualTo(partner.getEmail()))
-                .hasValueSatisfying(p -> assertThat(p.getInfo().getCompanyName()).isEqualTo(partner.getInfo().getCompanyName()))
-                .hasValueSatisfying(p -> assertThat(p.getInfo().getId()).isNotNull())
+                .hasValueSatisfying(p -> assertThat(p.getPartnerInfo().getCompanyName()).isEqualTo(partner.getPartnerInfo().getCompanyName()))
+                .hasValueSatisfying(p -> assertThat(p.getPartnerInfo().getId()).isNotNull())
                 .hasValueSatisfying(p -> assertThat(p.getAddresses().isEmpty()).isFalse())
                 .hasValueSatisfying(p -> assertThat(p.getAddresses().stream().findFirst().get().getPartner()).isNotNull());
     }

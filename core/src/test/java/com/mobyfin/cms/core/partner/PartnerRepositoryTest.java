@@ -1,6 +1,7 @@
 package com.mobyfin.cms.core.partner;
 
 import com.mobyfin.cms.core.partner.model.*;
+import com.mobyfin.cms.core.partner.repository.PartnerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

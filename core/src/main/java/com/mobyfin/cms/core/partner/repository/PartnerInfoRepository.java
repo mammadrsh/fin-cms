@@ -1,4 +1,4 @@
-package com.mobyfin.cms.core.partner;
+package com.mobyfin.cms.core.partner.repository;
 
 import com.mobyfin.cms.core.partner.model.PartnerInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
