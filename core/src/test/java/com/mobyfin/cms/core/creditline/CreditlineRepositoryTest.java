@@ -43,10 +43,10 @@ class CreditlineRepositoryTest {
         Creditline savedCreditline = underTest.save(creditline);
 
         // when
-        List<Creditline> creditlineList = underTest.findAllByPartner_Id(partner.getId());
+        List<Creditline> creditlineList = underTest.findAllByPartner_Id(savedPartner.getId());
 
         // then
-        assertThat(creditlineList).isNotEmpty().contains(creditline);
+        assertThat(creditlineList).isNotEmpty().contains(savedCreditline);
     }
 
     @Test
@@ -62,7 +62,7 @@ class CreditlineRepositoryTest {
         Partner savedPartner = partnerRepository.save(partner);
 
         // when
-        List<Creditline> creditlineList = underTest.findAllByPartner_Id(partner.getId());
+        List<Creditline> creditlineList = underTest.findAllByPartner_Id(savedPartner.getId());
 
         // then
         assertThat(creditlineList).isEmpty();
