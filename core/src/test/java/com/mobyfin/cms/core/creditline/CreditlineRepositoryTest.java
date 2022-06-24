@@ -48,4 +48,35 @@ class CreditlineRepositoryTest {
         // then
         assertThat(creditlineList).isNotEmpty().contains(creditline);
     }
+
+    @Test
+    void shouldNotFindAllByPartner_IdNoCreditline() {
+        // given
+        Partner partner = Partner.builder()
+                .partnerType(PartnerType.DEALER)
+                .firstname("Jax")
+                .lastname("Tomd")
+                .email("email@email.com")
+                .build();
+
+        Partner savedPartner = partnerRepository.save(partner);
+
+        // when
+        List<Creditline> creditlineList = underTest.findAllByPartner_Id(partner.getId());
+
+        // then
+        assertThat(creditlineList).isEmpty();
+    }
+
+    @Test
+    void shouldNotFindAllByPartner_IdNoPartner() {
+        // given
+        Long id = 10L;
+
+        // when
+        List<Creditline> creditlineList = underTest.findAllByPartner_Id(id);
+
+        // then
+        assertThat(creditlineList).isEmpty();
+    }
 }
