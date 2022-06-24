@@ -1,6 +1,23 @@
+### Partners GET
+GET http://localhost:8080/api/v1/partner
+Content-Type: application/json
+
 ### Partner Creation POST
 POST http://localhost:8080/api/v1/partner
 Content-Type: application/json
 
 {
+  "firstName": "Xender",
+  "lastName": "Lecker",
+  "email": "x4.l@gmail.com",
+  "partnerType": "DEALER",
+  "partnerInfo" : {
+    "companyName" : "Xender Motors"
+  },
+  "addresses": [
+    {
+      "addressType": "HOME",
+      "cityName": "Berlin"
+    }
+  ]
 }
