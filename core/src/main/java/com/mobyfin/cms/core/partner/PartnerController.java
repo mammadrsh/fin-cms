@@ -29,6 +29,12 @@ public class PartnerController {
         return ResponseEntity.ok(partnerService.getPartners());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Partner> getPartner(@PathVariable(name = "id") Long id) {
+        log.info("Getting partner with id {}", id);
+        return ResponseEntity.ok(partnerService.getPartner(id));
+    }
+
     @PostMapping
     public ResponseEntity<Partner> createPartner(@RequestBody PartnerDto partnerDto) {
         log.info("Creating a new partner {}", partnerDto);

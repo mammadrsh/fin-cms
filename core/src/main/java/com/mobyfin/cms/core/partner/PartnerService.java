@@ -20,6 +20,14 @@ public class PartnerService {
     private final PartnerRepository partnerRepository;
     private final AddressRepository addressRepository;
 
+    public Partner getPartner(Long id) {
+        return partnerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Partner with not found id: " + id));
+    }
+
+    public List<Partner> getPartners() {
+        return partnerRepository.findAll();
+    }
+
     public Partner createPartner(Partner partner) {
         if (partnerRepository.existsByEmail(partner.getEmail()))
             throw new IllegalArgumentException("Email already exists : " + partner.getEmail());
@@ -36,10 +44,6 @@ public class PartnerService {
 
         savedPartner.setAddresses(addresses);
         return savedPartner;
-    }
-
-    public List<Partner> getPartners() {
-        return partnerRepository.findAll();
     }
 
     public Partner updatePartner(Long id, Partner newPartner) {

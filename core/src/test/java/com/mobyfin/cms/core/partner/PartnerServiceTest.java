@@ -25,7 +25,6 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 class PartnerServiceTest {
 
     @Mock private PartnerRepository partnerRepository;
@@ -127,5 +126,18 @@ class PartnerServiceTest {
         Partner capturedPartner = partnerArgumentCaptor.getValue();
         assertThat(createdPartner.getFirstname()).isEqualTo(newFirstName);
         assertThat(capturedPartner.getFirstname()).isEqualTo(newFirstName);
+    }
+
+    @Test
+    void shouldGetPartner() {
+        // given
+        Long id = 10L;
+        given(partnerRepository.findById(id)).willReturn(Optional.ofNullable(partner));
+
+        // when
+        underTest.getPartner(id);
+
+        // then
+        verify(partnerRepository).findById(id);
     }
 }
