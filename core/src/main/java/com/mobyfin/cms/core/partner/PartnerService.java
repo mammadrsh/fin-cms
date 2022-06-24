@@ -9,6 +9,7 @@ import com.mobyfin.cms.core.partner.repository.PartnerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ public class PartnerService {
         return partnerRepository.findAll();
     }
 
+    @Transactional
     public Partner createPartner(Partner partner) {
         if (partnerRepository.existsByEmail(partner.getEmail()))
             throw new IllegalArgumentException("Email already exists : " + partner.getEmail());
@@ -46,6 +48,7 @@ public class PartnerService {
         return savedPartner;
     }
 
+    @Transactional
     public Partner updatePartner(Long id, Partner newPartner) {
         Partner partner = partnerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Partner with not found id: " + id));
 
