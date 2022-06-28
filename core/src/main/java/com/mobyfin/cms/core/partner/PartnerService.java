@@ -45,6 +45,10 @@ public class PartnerService {
         });
 
         savedPartner.setAddresses(addresses);
+
+        // todo: send notification
+
+
         return savedPartner;
     }
 
