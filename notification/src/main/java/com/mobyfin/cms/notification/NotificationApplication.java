@@ -15,7 +15,7 @@ public class NotificationApplication {
     @Bean
     CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
         return args -> {
-            kafkaTemplate.send("notification", "hello kafka");
+            kafkaTemplate.send("notification-topic", "hello kafka");
         };
     }
 }

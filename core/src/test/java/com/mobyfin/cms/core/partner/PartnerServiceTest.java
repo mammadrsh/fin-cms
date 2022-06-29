@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -29,13 +30,14 @@ class PartnerServiceTest {
 
     @Mock private PartnerRepository partnerRepository;
     @Mock private AddressRepository addressRepository;
+    @Mock private KafkaTemplate<String, String> kafkaTemplate;
     private PartnerService underTest;
 
     Partner partner;
 
     @BeforeEach
     void setUp() {
-        underTest = new PartnerService(partnerRepository, addressRepository);
+        underTest = new PartnerService(partnerRepository, addressRepository, kafkaTemplate);
 
         PartnerInfo info = new PartnerInfo().builder()
                 .companyName("Morgan X models")

@@ -18,3 +18,8 @@ spring:
     show-sql: 'true'
   kafka:
     bootstrap-servers: localhost:9092
+
+topics:
+  notification:
+    name: "notification-topic"
+    group-id: "default"

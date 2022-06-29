@@ -1,4 +1,4 @@
-package com.mobyfin.cms.notification.config;
+package com.mobyfin.cms.core.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
