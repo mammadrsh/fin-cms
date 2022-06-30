@@ -9,7 +9,7 @@ Content-Type: application/json
 {
   "firstName": "Xender",
   "lastName": "Lecker",
-  "email": "x4wasss.l@gmail.com",
+  "email": "sss@gmail.com",
   "partnerType": "DEALER",
   "partnerInfo" : {
     "companyName" : "Xender Motors"

@@ -1,5 +1,7 @@
 package com.mobyfin.cms.core.partner;
 
+import com.mobyfin.cms.core.notification.KafkaNotification;
+import com.mobyfin.cms.core.notification.NotificationInterface;
 import com.mobyfin.cms.core.partner.dto.PartnerDto;
 import com.mobyfin.cms.core.partner.model.Address;
 import com.mobyfin.cms.core.partner.model.Partner;
@@ -25,7 +27,7 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 public class PartnerService {
     private final PartnerRepository partnerRepository;
     private final AddressRepository addressRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final NotificationInterface notificationInterface;
 
     public Partner getPartner(Long id) {
         return partnerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Partner with not found id: " + id));
@@ -53,11 +55,7 @@ public class PartnerService {
 //        savedPartner.setAddresses(addresses);
 
         // todo: send notification
-        try {
-            kafkaTemplate.send("notification-topic", partner.getEmail());
-        } catch (InvalidTopicException e) {
-            log.info("Error in notification");
-        }
+        notificationInterface.send(savedPartner.getEmail());
 
         return savedPartner;
     }

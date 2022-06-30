@@ -1,4 +1,4 @@
-package com.mobyfin.cms.notification.config;
+package com.mobyfin.cms.core.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

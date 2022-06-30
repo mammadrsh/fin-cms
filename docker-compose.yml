@@ -32,7 +32,6 @@ services:
   zookeeper:
     image: zookeeper
     container_name: zookeeper
-    restart: "no"
     ports:
       - "2181:2181"
     networks:
@@ -41,7 +40,6 @@ services:
   kafka:
     image: bitnami/kafka
     container_name: kafka
-    restart: "no"
     ports:
       - "9092:9092"
     depends_on:

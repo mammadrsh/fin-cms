@@ -21,7 +21,7 @@ public class PartnerInfo {
     String companyName;
 
     @MapsId
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     Partner partner;
 }
