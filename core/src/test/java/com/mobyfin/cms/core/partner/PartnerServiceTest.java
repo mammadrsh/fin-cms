@@ -1,5 +1,6 @@
 package com.mobyfin.cms.core.partner;
 
+import com.mobyfin.cms.core.notification.NotificationInterface;
 import com.mobyfin.cms.core.partner.dto.PartnerDto;
 import com.mobyfin.cms.core.partner.model.*;
 import com.mobyfin.cms.core.partner.repository.AddressRepository;
@@ -30,14 +31,14 @@ class PartnerServiceTest {
 
     @Mock private PartnerRepository partnerRepository;
     @Mock private AddressRepository addressRepository;
-    @Mock private KafkaTemplate<String, String> kafkaTemplate;
+    @Mock private NotificationInterface notificationInterface;
     private PartnerService underTest;
 
     Partner partner;
 
     @BeforeEach
     void setUp() {
-        underTest = new PartnerService(partnerRepository, addressRepository, kafkaTemplate);
+        underTest = new PartnerService(partnerRepository, addressRepository, notificationInterface);
 
         PartnerInfo info = new PartnerInfo().builder()
                 .companyName("Morgan X models")

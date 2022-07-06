@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
-    name: notification
+    name: core
   datasource:
     username: 'root'
-    url: jdbc:postgresql://localhost:5432/notification
+    url: jdbc:postgresql://postgres:5432/core
     password: 'password'
   jpa:
     properties:
@@ -17,10 +17,7 @@ spring:
       ddl-auto: update
     show-sql: 'true'
   kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: "default"
-
+    bootstrap-servers: kafka:9092
 
 topics:
   notification:
