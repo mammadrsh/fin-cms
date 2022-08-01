@@ -54,16 +54,16 @@ class PartnerMapperTest {
         dto.setAddresses(partner.getAddresses());
 
         // when
-        Partner partner = PartnerMapper.INSTANCE.partnerDtoToPartner(dto);
+        Partner newPartner = PartnerMapper.INSTANCE.partnerDtoToPartner(dto);
 
         // then
-        assertThat(partner).isNotNull();
-        assertThat(partner.getFirstname()).isEqualTo(dto.getFirstName());
-        assertThat(partner.getLastname()).isEqualTo(dto.getLastName());
-        assertThat(partner.getEmail()).isEqualTo(dto.getEmail());
-        assertThat(partner.getPartnerType()).isEqualTo(dto.getPartnerType());
-        assertThat(partner.getPartnerInfo()).isEqualTo(dto.getPartnerInfo());
-        assertThat(partner.getAddresses()).isEqualTo(dto.getAddresses());
+        assertThat(newPartner).isNotNull();
+        assertThat(newPartner.getFirstname()).isEqualTo(dto.getFirstName());
+        assertThat(newPartner.getLastname()).isEqualTo(dto.getLastName());
+        assertThat(newPartner.getEmail()).isEqualTo(dto.getEmail());
+        assertThat(newPartner.getPartnerType()).isEqualTo(dto.getPartnerType());
+        assertThat(newPartner.getPartnerInfo()).isEqualTo(dto.getPartnerInfo());
+        assertThat(newPartner.getAddresses()).isEqualTo(dto.getAddresses());
     }
 
     @Test

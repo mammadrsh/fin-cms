@@ -1,5 +1,6 @@
 package com.mobyfin.cms.core.partner.model;
 
+import com.mobyfin.cms.core.asset.model.Asset;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,4 +32,7 @@ public class Partner {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partner")
     Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partner")
+    Set<Asset> assets = new HashSet<>();
 }
